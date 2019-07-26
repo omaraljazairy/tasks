@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+<center>  <h1>All Tasks</h1></center>
+  <p>Tasks Summary</p>
+  <ul>
+    <li><strong>Total current Tasks:</strong> {{ total_tasks }}</li>
+    <li><strong>Total current Sub-Tasks:</strong> {{ total_subtasks }}</li>
+    <li><strong>Total current task'ss Statuses:</strong>
+      {% for k,v in total_status.items %}
+      <br><strong>{{ k }} - {{ v }} </strong>
+      {% endfor %}
+    </li>
+    <li><strong>Tasks durations per minute:</strong>
+      {% for duration in durations %}
+      <br><strong>{{ duration }} min </strong>
+      {% endfor %}
+    </li>
+
+  </ul>
+</div>
+{% endblock %}

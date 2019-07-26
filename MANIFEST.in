@@ -1,0 +1,6 @@
+include README.txt
+include requirements.txt
+include webtasks/tasks.sqlite3
+recursive-include webtasks/tasks/static *
+recursive-include webtasks/static *
+recursive-include webtasks/tasks/templates *

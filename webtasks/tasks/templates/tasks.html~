@@ -1,0 +1,77 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="container">
+  <h1>Tasks List</h1>
+  <table class="table table-striped table-hover" id="tasks_table">
+    <!-- <table border=2 id="tasks_table"> -->
+      <thead class="thead-dark">
+  <tr>
+    <th>Id</th>
+    <th>name</th>
+    <th>start</th>
+    <th>end</th>
+    <th>duration</th>
+    <th>status</th>
+    <th>parent task</th>
+    <th>owner</th>
+    <th>priority</th>
+  </tr>
+      </thead>
+    <tbody>
+    {% if tasks_list %}
+  {% for task in tasks_list %}
+  <tr id={{ task.id }} >
+    <td><button type="button" value={{ task.id }} class="btn btn-outline-primary"> {{ task.id }} </button></td>
+    <td>{{ task.name }} </td>
+    <td>{{ task.start }} </td>
+    <td>{{ task.end }}</td>
+    <td>{{ task.duration }}</td>
+    <td>{{ task.status }}</td>
+    <td>{{ task.parent_task.id }} </td> 
+  </tr>
+    <!--  {{ tasks_list }} -->
+  {% endfor %}
+  </tbody>
+</table>
+{% block javascript %}
+  <script>
+    $("button").click(function () {
+        var taskid = $(this).val();
+	console.log(taskid)
+      
+     $.ajax({
+         url: '/tasks/task/' + taskid + '/',
+         type: "GET",
+	 dataType: "json",
+         contentType:"application/json",
+         secure: true,
+         headers: {
+             'Access-Control-Allow-Origin': '*',
+	     
+         },
+
+        success: function (data) {
+            console.log('success');
+	    console.log(data);
+	    
+	    var row = $("#tasks_table tr#" + taskid)
+	    var colCount = row.find('td').length
+	    var priority = data.task_priority.replace('M','Medium').replace('L','Low').replace('H','High')
+	    var user = data.first_name + ' ' + data.last_name
+	    
+	    console.log(colCount)
+            
+	    if (colCount > 7) {
+		return;
+	    } else {
+	    	row.append('<td>' + user + '</td><td>' + priority + '</td>' );
+	    }
+       }
+      });
+    });
+  </script>
+{% endblock %}
+{% endif %}
+</div>
+{% endblock %}

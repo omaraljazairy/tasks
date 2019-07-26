@@ -1,0 +1,9 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>All Tasks</h1>
+  <p>Welcome to Tasks</p>
+  <ul>
+    <li><strong>Tasks:</strong> {{ tasks }}</li>
+  </ul>
+{% endblock %}
